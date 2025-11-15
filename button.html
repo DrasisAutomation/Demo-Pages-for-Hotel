@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Square Toggle Card</title>
+
+<!-- Bulb Icon CDN -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+
+<style>
+    body {
+        background: #333;
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .card {
+        width: 150px;
+        height: 150px;
+        background: #2a2a2a;
+        border-radius: 18px;
+        padding: 14px;
+        box-sizing: border-box;
+        transition: 0.35s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+        cursor: pointer;
+    }
+
+    /* ON State */
+    .card.on {
+        background: #F26F1E !important;
+        box-shadow: none !important;
+    }
+
+    /* Top Row */
+    .top-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .icon {
+        font-size: 28px;
+        color: white;
+    }
+
+    /* Bottom Content (STACKED) */
+    .bottom-column {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .title {
+        font-size: 15px;
+        font-weight: bold;
+        color: white;
+    }
+
+    .state {
+        font-size: 13px;
+        color: white;
+        opacity: 0.85;
+    }
+
+    /* Small Toggle */
+    .switch {
+        font-size: 14px;
+        width: 2.6em;
+        height: 1.4em;
+        position: relative;
+        display: inline-block;
+        pointer-events: none; /* Prevent direct clicking */
+    }
+
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .slider {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background-color: #ccc;
+        border-radius: 4px;
+        transition: .4s;
+        box-shadow: inset 1px 3px 6px rgba(0,0,0,0.3);
+    }
+
+    .slider:before {
+        content: "";
+        position: absolute;
+        height: 1em;
+        width: 0.1em;
+        left: 0.23em;
+        bottom: 0.2em;
+        background: white;
+        transition: .4s;
+    }
+
+    /* ON */
+    input:checked + .slider {
+        background: #171717;
+        box-shadow: inset 2px 5px 10px rgb(0, 0, 0);
+    }
+
+    input:checked + .slider:before {
+        transform: translateX(2em) rotate(360deg);
+    }
+</style>
+</head>
+<body>
+
+<div class="card" id="lightCard">
+
+    <!-- Top Row -->
+    <div class="top-row">
+        <i class="ri-lightbulb-flash-fill icon"></i>
+
+        <label class="switch">
+            <input type="checkbox" id="toggle">
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <!-- Bottom Column (Name + Status on next line) -->
+    <div class="bottom-column">
+        <div class="title">LEDs</div>
+        <div class="state" id="stateText">OFF</div>
+    </div>
+
+</div>
+
+<script>
+    const card = document.getElementById("lightCard");
+    const toggle = document.getElementById("toggle");
+    const stateText = document.getElementById("stateText");
+
+    // Toggle when clicking anywhere on the card
+    card.addEventListener("click", () => {
+        toggle.checked = !toggle.checked;
+
+        if (toggle.checked) {
+            card.classList.add("on");
+            stateText.textContent = "ON";
+        } else {
+            card.classList.remove("on");
+            stateText.textContent = "OFF";
+        }
+    });
+</script>
+
+</body>
+</html>
